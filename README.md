@@ -66,3 +66,41 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Additional Notes from console logs
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+```
+  "homepage" : "http://myname.github.io/myapp",
+```
+The build folder is ready to be deployed.
+You may serve it with a static server:
+```
+  npm install -g serve
+  serve -s build
+```
+Find out more about deployment here:
+```
+  https://bit.ly/CRA-deploy
+```
+
+The build folder is ready to be deployed.
+To publish it at http://goel4ever.github.io/weather-app , run:
+```
+  npm install --save-dev gh-pages
+```
+Add the following script in your package.json.
+```
+    // ...
+    "scripts": {
+      // ...
+      "predeploy": "npm run build",
+      "deploy": "gh-pages -d build"
+    }
+```
+Then run:
+```
+  npm run deploy
+```
