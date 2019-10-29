@@ -6,8 +6,7 @@ import Form from './components/Form';
 import Weather from './components/Weather';
 
 const ZIP_CODE = '08816';
-const API_KEY_WEATHER = '689dc79dcedd7d6333002da24c347a2b';
-const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY_WEATHER}`;
+const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.REACT_APP_API_KEY_WEATHER}`;
 const URL = `${BASE_URL}&zip=`;
 
 class App extends React.Component {
