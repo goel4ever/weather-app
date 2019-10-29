@@ -104,3 +104,6 @@ Then run:
 ```
   npm run deploy
 ```
+
+## Environment Variable Management
+https://create-react-app.dev/docs/adding-custom-environment-variables/
