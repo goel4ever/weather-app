@@ -30,10 +30,11 @@ class App extends React.Component {
 
       const api_call = await fetch(vendorUrl);
       const data = await api_call.json();
-      console.log(data);
+      const temperatureInFahrenheit = (((data.main.temp-273.15)*1.8)+32).toFixed(2);
+      // console.log(data);
 
       this.setState({
-        temperature: data.main.temp,
+        temperature: temperatureInFahrenheit,
         city: data.name,
         country: data.sys.country,
         humidity: data.main.humidity,

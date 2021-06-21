@@ -2,13 +2,13 @@
   "name": "weather-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://goel4ever.github.io/weather-app",
+  "homepage": "https://goel4ever.github.io/weather-app",
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-ga": "^2.7.0",
-    "react-scripts": "3.2.0"
+    "bootstrap": "^4.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-ga": "^3.3.0",
+    "react-scripts": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,6 +34,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^1.1.0"
   }
 }
