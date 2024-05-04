@@ -25,17 +25,10 @@ class App extends React.Component {
     return speed * CONVERSION_FACTOR;
   }
 
-  getWeather = async (e) => {
-    e.preventDefault();
+  updateState = async (vendorUrl) => {
+    const data = await this.getWeatherData(vendorUrl);
 
-    const zipCode = e.target.elements.zipcode.value || ZIP_CODE;
-    const country = 'us';
-
-    let vendorUrl = URL;
-    if (zipCode) {
-      vendorUrl += `${zipCode},${country}`;
-
-      const data = await this.getWeatherData(vendorUrl);
+    if (data.cod === 200) {
       const { main, wind, name, sys, weather } = data;
       const { temp, feels_like, temp_min, temp_max, humidity } = main;
       const { speed, gust } = wind;
@@ -72,8 +65,22 @@ class App extends React.Component {
         windSpeed: undefined,
         windGust: undefined,
         description: undefined,
-        error: 'Please submit valid values',
+        error: 'Please submit valid zipcode.',
       });
+    }
+  }
+
+  getWeather = async (e) => {
+    e.preventDefault();
+
+    const zipCode = e.target.elements.zipcode.value || ZIP_CODE;
+    const country = 'us';
+
+    let vendorUrl = URL;
+    if (zipCode) {
+      vendorUrl += `${zipCode},${country}`;
+
+      await this.updateState(vendorUrl);
     }
   }
 
