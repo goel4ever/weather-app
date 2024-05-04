@@ -65,7 +65,7 @@ class App extends React.Component {
         windSpeed: undefined,
         windGust: undefined,
         description: undefined,
-        error: 'Please submit valid zipcode.',
+        error: data.cod === 401 ? 'API key expired' : 'Please submit valid zipcode.',
       });
     }
   }
