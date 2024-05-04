@@ -40,12 +40,12 @@ class App extends React.Component {
       const { temp, feels_like, temp_min, temp_max, humidity } = main;
       const { speed, gust } = wind;
 
-      const temperatureInFahrenheit = (((temp-273.15)*1.8)+32).toFixed(2);
-      const feelsLikeInFahrenheit = (((feels_like-273.15)*1.8)+32).toFixed(2);
-      const minTempInFahrenheit = (((temp_min-273.15)*1.8)+32).toFixed(2);
-      const maxTempInFahrenheit = (((temp_max-273.15)*1.8)+32).toFixed(2);
-      const windSpeedInMph = this.convertToMph(speed).toFixed(2);
-      const windGustInMph = this.convertToMph(gust).toFixed(2);
+      const temperatureInFahrenheit = temp ? (((temp-273.15)*1.8)+32).toFixed(2) : null;
+      const feelsLikeInFahrenheit = feels_like ? (((feels_like-273.15)*1.8)+32).toFixed(2) : null;
+      const minTempInFahrenheit = temp_min ? (((temp_min-273.15)*1.8)+32).toFixed(2) : null;
+      const maxTempInFahrenheit = temp_max ? (((temp_max-273.15)*1.8)+32).toFixed(2) : null;
+      const windSpeedInMph = speed ? this.convertToMph(speed).toFixed(2) : null;
+      const windGustInMph = gust ? this.convertToMph(gust).toFixed(2) : null;
 
       this.setState({
         temperature: temperatureInFahrenheit,
