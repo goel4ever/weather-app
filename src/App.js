@@ -8,12 +8,23 @@ import Weather from './components/Weather';
 const ZIP_CODE = '08816';
 const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.REACT_APP_API_KEY_WEATHER}`;
 const URL = `${BASE_URL}&zip=`;
+const CONVERSION_FACTOR = 2.23694;
 
 class App extends React.Component {
   state = {
     temperature: undefined,
     error: undefined,
   }
+
+  getWeatherData = async (url) => {
+    const api_call = await fetch(url);
+    return await api_call.json();
+  }
+
+  convertToMph = (speed) => {
+    return speed * CONVERSION_FACTOR;
+  }
+
   getWeather = async (e) => {
     e.preventDefault();
 
@@ -24,28 +35,29 @@ class App extends React.Component {
     if (zipCode) {
       vendorUrl += `${zipCode},${country}`;
 
-      const api_call = await fetch(vendorUrl);
-      const data = await api_call.json();
-      const temperatureInFahrenheit = (((data.main.temp-273.15)*1.8)+32).toFixed(2);
-      const feelsLikeInFahrenheit = (((data.main.feels_like-273.15)*1.8)+32).toFixed(2);
-      const minTempInFahrenheit = (((data.main.temp_min-273.15)*1.8)+32).toFixed(2);
-      const maxTempInFahrenheit = (((data.main.temp_max-273.15)*1.8)+32).toFixed(2);
-      const windSpeedInMph = this.windMpsToMph(data.wind.speed).toFixed(2);
-      const windGustInMph = this.windMpsToMph(data.wind.gust).toFixed(2);
+      const data = await this.getWeatherData(vendorUrl);
+      const { main, wind, name, sys, weather } = data;
+      const { temp, feels_like, temp_min, temp_max, humidity } = main;
+      const { speed, gust } = wind;
 
-      // console.log(data);
+      const temperatureInFahrenheit = (((temp-273.15)*1.8)+32).toFixed(2);
+      const feelsLikeInFahrenheit = (((feels_like-273.15)*1.8)+32).toFixed(2);
+      const minTempInFahrenheit = (((temp_min-273.15)*1.8)+32).toFixed(2);
+      const maxTempInFahrenheit = (((temp_max-273.15)*1.8)+32).toFixed(2);
+      const windSpeedInMph = this.convertToMph(speed).toFixed(2);
+      const windGustInMph = this.convertToMph(gust).toFixed(2);
 
       this.setState({
         temperature: temperatureInFahrenheit,
         feelsLike: feelsLikeInFahrenheit,
         minTemperature: minTempInFahrenheit,
         maxTemperature: maxTempInFahrenheit,
-        city: data.name,
-        country: data.sys.country,
-        humidity: data.main.humidity,
+        city: name,
+        country: sys.country,
+        humidity: humidity,
         windSpeed: windSpeedInMph,
         windGust: windGustInMph,
-        description: data.weather[0].description,
+        description: weather[0].description,
         error: '',
       });
     } else {
@@ -64,9 +76,7 @@ class App extends React.Component {
       });
     }
   }
-  windMpsToMph = (speed) => {
-    return speed * 2.23694;
-  }
+
   render() {
     ReactGA.send({
       hitType: 'pageview',
