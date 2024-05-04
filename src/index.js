@@ -6,7 +6,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ReactGA from 'react-ga4';
 
-ReactGA.initialize('G-HMTTSH9HT0');
+const gaOptions = {
+  gaOptions: {
+    cookieUpdate: false,
+  },
+};
+
+ReactGA.initialize('G-HMTTSH9HT0', gaOptions);
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

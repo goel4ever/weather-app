@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Title from './components/Title';
-import Form from './components/Form';
+import WeatherForm from './components/WeatherForm';
 import Weather from './components/Weather';
 
 const ZIP_CODE = '08816';
@@ -21,12 +21,12 @@ class App extends React.Component {
   getWeather = async (e) => {
     e.preventDefault();
 
-    const zipCode = e.target.elements.zipcode.value;
+    const zipCode = e.target.elements.zipcode.value || ZIP_CODE;
     const country = 'us';
 
     let vendorUrl = URL;
     if (zipCode) {
-      vendorUrl += `${zipCode},us`;
+      vendorUrl += `${zipCode},${country}`;
 
       const api_call = await fetch(vendorUrl);
       const data = await api_call.json();
@@ -58,12 +58,12 @@ class App extends React.Component {
         <div className="wrapper">
           <div className="main">
             <div className="container">
-              <div className="row">
-                <div className="col-xs-5 title-container">
+              <div className="row align-items-center">
+                <div className="col-5 title-container">
                   <Title />
                 </div>
-                <div className="col-xs-7 form-container">
-                  <Form getWeather={this.getWeather} />
+                <div className="col-7 form-container">
+                  <WeatherForm getWeather={this.getWeather} />
                   <Weather
                     temperature={this.state.temperature}
                     city={this.state.city}
@@ -81,26 +81,5 @@ class App extends React.Component {
     );
   }
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
